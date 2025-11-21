@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url= env("DATABASE_URL")
+
+}
+model User {
+  id          Int         @id @default(autoincrement())
+  archive     String      @default("user")
+  username    String      @unique
+  password    String 
+  email       String      @unique
+  active      Boolean     @default(false)
+  position    Role        @default(user)
+  createdAt   DateTime    @default(now())
+  pic         Pic[]
+  blog        Blog[]
+}
+
+enum Role {
+  user
+  admin
+}
+
+model Pic {
+  id                Int           @id @default(autoincrement())
+  archive           String        @default("pic")  
+  hostId            Int    
+  host              User          @relation(fields: [hostId], references: [id])
+  name              String    
+  createdAt         DateTime      @default(now())
+}
+
+model Blog  {
+  id                Int           @id @default(autoincrement())
+  archive           String        @default("blog")
+  hostId            Int
+  host              User          @relation(fields: [hostId], references: [id])   
+  name              String    
+  slug              String        @unique
+  description       String?       @db.Text
+  keyword           String?       @db.Text
+  content           String?       @db.Text
+  infor             String?       @db.Text
+  video             String?       @db.Text   
+  cover             String?       @db.Text
+  createdAt         DateTime      @default(now())
+  updateDate        DateTime      @default(now())
+  tag               TagBlog[]
+}
+
+model Tag{
+  id                Int           @id @default(autoincrement())
+  archive           String        @default("tag")
+  name              String        @unique
+  blog              TagBlog[]
+}
+
+model TagBlog{
+  tagId             Int
+  tag               Tag           @relation(fields: [tagId], references: [id])    
+  blogId            Int
+  blog              Blog           @relation(fields: [blogId], references: [id])   
+
+  @@unique([tagId, blogId])           
+}

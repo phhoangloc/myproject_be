@@ -1,0 +1,35 @@
+
+export class Repository {
+    model: any;
+
+    constructor(model: any) {
+        this.model = model
+    }
+
+    async findAll<T>(where: Partial<T>) {
+        const result = await this.model.findMany({ where: where })
+        return result
+    }
+
+    async findOne(id: number) {
+        const result = await this.model.findFirst({ where: { id } })
+        return result
+    }
+    async findBySlug(slug: string) {
+        const result = await this.model.findFirst({ where: { slug } })
+        return result
+    }
+    async create<T>(body: Partial<T>) {
+        const result = await this.model.create({ data: body })
+        return result
+    }
+    async update<T>(id: number, body: Partial<T>) {
+        const result = await this.model.update({ where: { id }, data: body })
+        return result
+    }
+
+    async delete<T>(id: number) {
+        const result = await this.model.delete({ where: { id } })
+        return result
+    }
+}
