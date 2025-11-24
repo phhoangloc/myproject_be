@@ -1,5 +1,5 @@
-Get http://localhost:4000/api/user
-Cookie:token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjkwNTQxLCJleHAiOjE3NjM3NzY5NDF9.ftw9rRGD27HtC_KTo_5uuoxvg-y6yJkpoN1g7jWNB-g
+Get http://localhost:4000/api/admin
+Cookie:token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzODYwODEwLCJleHAiOjE3NjM5NDcyMTB9.CI72DTwgXNMLW5pF9u5n73w2JNJ_9mcgAU4MnluyeAY
 ###
 post http://localhost:4000/api/signup
 Content-Type: application/json
@@ -34,7 +34,7 @@ Content-Type: image/image/jpeg
 < ./images.png
 --WebAppBoundary--
 ####
-GET http://localhost:4000/api/blog
+GET http://localhost:4000/api/pic
 ###
 DELETE  http://localhost:4000/api/user/pic/7
 Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjA2MjEwLCJleHAiOjE3NjM2OTI2MTB9.X8Dh0eE4uMHNXf_Y5Cl1T4msQ7JbIyksILCaqhvh4tc;

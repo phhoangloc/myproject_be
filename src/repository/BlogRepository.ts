@@ -1,9 +1,9 @@
 import { Repository } from "./Repository";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+import { Prisma } from "../ult/prisma";
+
 export class BlogRepository extends Repository {
 
     constructor() {
-        super(prisma.blog)
+        super(Prisma.getInstance().blog)
     }
 } 

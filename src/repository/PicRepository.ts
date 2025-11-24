@@ -1,9 +1,7 @@
 import { Repository } from "./Repository";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient()
+import { Prisma } from "../ult/prisma";
 export class PicRepository extends Repository {
     constructor() {
-        super(prisma.pic)
+        super(Prisma.getInstance().pic)
     }
 }

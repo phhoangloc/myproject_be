@@ -13,7 +13,6 @@ export class UserController extends Controller {
         this.service = iUserService
     }
     findOne = async (req: RequestExtends, res: Response) => {
-        console.log(this.service)
         const id = req.id
         try {
             if (!id) {
