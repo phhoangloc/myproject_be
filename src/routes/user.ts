@@ -11,5 +11,7 @@ UserRouters.post("/logout", iUserController.logout)
 UserRouters.post("/pic", iPicController.create)
 UserRouters.delete("/pic/:id", iPicController.delete)
 
+UserRouters.get("/blog/", iBlogController.findAll)
+UserRouters.post("/blog/", iBlogController.create)
 UserRouters.put("/blog/:id", iBlogController.update)
 UserRouters.delete("/blog/:id", iBlogController.delete)

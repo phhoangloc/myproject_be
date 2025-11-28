@@ -1,45 +1,37 @@
-import { IUserRepository } from "../repository/IRepository"
-import { PrismaClient } from "@prisma/client"
 
-const iUserRepository = new IUserRepository()
+export class ValidateUser {
+    private username: string = ""
+    private password: string = ""
+    private email: string = ""
 
-const prisma = new PrismaClient()
-
-const validateUsernameExist = async (username: string) => {
-    const user = await iUserRepository.findAll({ username: username })
-    if (user[0]?.username === username) {
-        return "this username is existed"
+    public setusername(username: string) {
+        this.username = username
+        return this
     }
-}
-const validateEmailExist = async (email: string) => {
-    const user = await iUserRepository.findAll({ email })
-    if (user[0]?.email === email) {
-        return "this email is existed"
+    public setpassword(password: string) {
+        this.password = password
+        return this
+
     }
-}
-const validateUsernameLength = async (username: string) => {
-    if (username.length < 6) {
-        return "your username must be equal or larger than 6 character"
+    public setemail(email: string) {
+        this.email = email
+        return this
     }
 
-}
-const validatePasswordLength = async (password: string) => {
-    if (password.length < 6) {
-        return "your password must be equal or larger than 6 character"
+    public build() {
+        if (this.username && this.username.length < 6) {
+            throw new Error("your username must be equal or larger than 6 character")
+        }
+        if (this.password && this.password.length < 6) {
+            throw new Error("your password must be equal or larger than 6 character")
+        }
+        if (this.email && !/\S+@\S+\.\S+/.test(this.email) && this.email.length != 0) {
+            throw new Error("your email is not valid")
+        }
+        return {
+            username: this.username,
+            password: this.password,
+            email: this.email
+        }
     }
-
 }
-const validateEmailLength = async (email: string) => {
-    if (!/\S+@\S+\.\S+/.test(email) && email.length != 0) {
-        return "your email is not valid"
-    }
-
-}
-
-export const validate = async (body: any) =>
-    await validateUsernameLength(body.username)
-    || await validateUsernameExist(body.username)
-    || await validatePasswordLength(body.password)
-    || await validateEmailLength(body.email)
-    || await validateEmailExist(body.email)
-

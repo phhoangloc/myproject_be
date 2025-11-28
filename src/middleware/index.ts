@@ -1,9 +1,9 @@
 import { parse } from "cookie";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
-import { IUserService } from "../services/IService";
+import { IService } from "../services/IService";
 import { APIResponse } from "../ult/DTO";
-const iUserService = new IUserService()
+const iUserService = IService.getService("user")
 interface CustomRequest extends Request {
     id?: number;
 }
@@ -34,11 +34,16 @@ export class MiddleWare {
                 throw new Error("id is not Existed")
             }
             const currentPosition = user.position
-            if (currentPosition !== "admin" && currentPosition !== this.position) {
-                throw new Error("you don't have permission")
-            }
+
             req.id = result.id
-            next()
+
+            switch (this.position) {
+                case "admin":
+                case "user":
+                    return next()
+                default:
+                    throw new Error("you don't have permission")
+            }
         } catch (error: any) {
             const apiResponse = new APIResponse(false, error.message, null)
             res.json(apiResponse)

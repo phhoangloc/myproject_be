@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 
 export class Repository {
     model: any;
@@ -7,7 +8,9 @@ export class Repository {
     }
 
     async findAll<T>(where: Partial<T>) {
-        const result = await this.model.findMany({ where: where })
+        const result = await this.model.findMany({
+            where: where,
+        })
         return result
     }
 
@@ -28,7 +31,7 @@ export class Repository {
         return result
     }
 
-    async delete<T>(id: number) {
+    async delete(id: number) {
         const result = await this.model.delete({ where: { id } })
         return result
     }

@@ -1,10 +1,11 @@
-import { Repository } from "../repository/Repository";
 import { ParsedQs } from "qs";
-
+import { IRepository } from "../repository/IRepository";
+import { Repository } from "../repository/Repository";
+const iUserRepository = IRepository.getRepository("user")
 export class Service {
-    repository: any
+    repository: Repository
 
-    constructor(repository: any) {
+    constructor(repository: Repository) {
         this.repository = repository
     }
 
@@ -31,12 +32,32 @@ export class Service {
         const result = await this.repository.create(body)
         return result
     }
-    async update<T>(id: string, body: Partial<T>) {
+    async update<T>(id: string | undefined, userId: string | undefined, body: Partial<T>) {
+        const item = await this.repository.findOne(Number(id))
+        const user = await iUserRepository?.findOne(Number(userId))
+        if (!item) {
+            throw Error("this id is not existed")
+        }
+        const currentHostId = item.hostId
+        const currentPosition = user.position
+        if (Number(currentHostId) !== Number(userId) && currentPosition !== "admin") {
+            throw Error("you are not the owner")
+        }
         const result = await this.repository.update(Number(id), body)
         return result
     }
 
-    async delete(id: string) {
+    async delete(id: string | undefined, userId: string | undefined) {
+        const item = await this.repository.findOne(Number(id))
+        const user = await iUserRepository?.findOne(Number(userId))
+        if (!item) {
+            throw Error("this id is not existed")
+        }
+        const currentHostId = item.hostId
+        const currentPosition = user.position
+        if (Number(currentHostId) !== Number(userId) && currentPosition !== "admin") {
+            throw Error("you are not the owner")
+        }
         const result = await this.repository.delete(Number(id))
         return result
     }

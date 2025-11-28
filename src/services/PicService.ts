@@ -1,11 +1,11 @@
 import { IncomingForm } from "formidable";
-import { IPicRepository } from "../repository/IRepository";
+import { IRepository } from "../repository/IRepository";
 import { Service } from "./Service";
 
-const iPicRepository = new IPicRepository()
+const iPicRepository = IRepository.getRepository("pic")
 export class PicService extends Service {
     constructor() {
-        super(iPicRepository)
+        iPicRepository ? super(iPicRepository) : null
     }
     async uploadPic<T>({ body, file }: { body: Partial<T>, file: File }) {
         const result = await this.repository.create(body)

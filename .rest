@@ -1,13 +1,13 @@
-Get http://localhost:4000/api/admin
-Cookie:token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzODYwODEwLCJleHAiOjE3NjM5NDcyMTB9.CI72DTwgXNMLW5pF9u5n73w2JNJ_9mcgAU4MnluyeAY
+Get http://localhost:4000/api/user/blog
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0MjkyNjY3fQ.sgN1vZecvWZUEYkwTQpJNLOHQcFQ2HCrny-Ga5x4DvQ
 ###
 post http://localhost:4000/api/signup
 Content-Type: application/json
 
 {
-    "username":"hoangloc",
+    "username":"hoangloc2",
     "password":"031090Ph@",
-    "email":"ph.hoangloc@gmail.com"
+    "email":"ph.hoangloc1990@gmail.com"
 }
 ###
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 ###
 POST http://localhost:4000/api/user/pic
 Content-Type: multipart/form-data; boundary=WebAppBoundary
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjA2MjEwLCJleHAiOjE3NjM2OTI2MTB9.X8Dh0eE4uMHNXf_Y5Cl1T4msQ7JbIyksILCaqhvh4tc;
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0MDMyOTgyLCJleHAiOjE3NjQxMTkzODJ9.Uk4iFsbpW5YymMbDRLOMy_X5M2r8n2Fr4DS3aw_me-A
 
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
@@ -34,17 +34,17 @@ Content-Type: image/image/jpeg
 < ./images.png
 --WebAppBoundary--
 ####
-GET http://localhost:4000/api/pic
+GET http://localhost:4000/api/blog
 ###
 DELETE  http://localhost:4000/api/user/pic/7
 Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjA2MjEwLCJleHAiOjE3NjM2OTI2MTB9.X8Dh0eE4uMHNXf_Y5Cl1T4msQ7JbIyksILCaqhvh4tc;
 ###
-DELETE  http://localhost:4000/api/user/blog/2
+POST http://localhost:4000/api/user/blog
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjA2MjEwLCJleHAiOjE3NjM2OTI2MTB9.X8Dh0eE4uMHNXf_Y5Cl1T4msQ7JbIyksILCaqhvh4tc;
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0MDMyOTgyLCJleHAiOjE3NjQxMTkzODJ9.Uk4iFsbpW5YymMbDRLOMy_X5M2r8n2Fr4DS3aw_me-A
 
 {
-    "name":"hello2",
-    "slug":"hello",
-    "content":"hello2"
+    "name":"hello5",
+    "slug":"hello5",
+    "content":"hello4"
 }

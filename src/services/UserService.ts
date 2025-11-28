@@ -1,13 +1,13 @@
 import { Service } from "./Service";
-import { IUserRepository } from "../repository/IRepository";
 import { decode, encode } from "../ult/bscrypt";
-import { validate } from "../ult/validate";
 import { sendMailToAcceptRegister } from "../ult/mail";
 import { generateToken } from "../ult/jwt";
-const iUserRepository = new IUserRepository()
+import { IRepository } from "../repository/IRepository";
+import { ValidateUser } from "../ult/validate";
+const iUserRepository = IRepository.getRepository("user")
 export class UserService extends Service {
     constructor() {
-        super(iUserRepository)
+        iUserRepository ? super(iUserRepository) : null
     }
     async findAll(query: { username: string, email: string }) {
         const newQuery = query ? {
@@ -18,13 +18,25 @@ export class UserService extends Service {
         return result
     }
     async create(body: any) {
-        const password_encode = encode(body.password)
-        const newBody = { ...body }
-        newBody.password = password_encode
-        const validateResult = await validate(newBody)
-        if (validateResult) {
-            throw Error(validateResult)
+        const userUsername = await iUserRepository?.findAll({ username: body.username })
+        if (userUsername[0]?.username === body.username) {
+            throw new Error("this username is existed")
         }
+
+        const userEmail = await iUserRepository?.findAll({ email: body.email })
+        if (userEmail[0]?.email === body.email) {
+            throw new Error("this email is existed")
+        }
+        const validateUser: { username: string, password: string, email: string } = new ValidateUser()
+            .setusername(body.username)
+            .setpassword(body.password)
+            .setemail(body.email)
+            .build()
+
+        const password_encode = encode(body.password)
+        const newBody = { ...validateUser }
+        newBody.password = password_encode
+        console.log(newBody);
         try {
             await this.repository.create(newBody)
             await sendMailToAcceptRegister(newBody.email)
@@ -49,7 +61,6 @@ export class UserService extends Service {
 
     }
     async login(body: any) {
-
         const users = await this.repository.findAll({ username: body.username })
         const id = users[0]?.id
         if (!id) {

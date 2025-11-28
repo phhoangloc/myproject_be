@@ -1,16 +1,15 @@
 import { Request, Response } from "express"
-import { IUserService } from "../services/IService"
 import { Controller } from "./Controller"
 import { APIResponse } from "../ult/DTO"
 import { saveCookie } from "../ult/cookie"
-const iUserService = new IUserService()
+import { IService } from "../services/IService"
+const iUserService = IService.getService("user")
 interface RequestExtends extends Request {
     id?: string
 }
 export class UserController extends Controller {
     constructor() {
         super(iUserService)
-        this.service = iUserService
     }
     findOne = async (req: RequestExtends, res: Response) => {
         const id = req.id
@@ -33,7 +32,7 @@ export class UserController extends Controller {
     active = async (req: Request, res: Response) => {
         const query = req.query
         try {
-            const result = await iUserService.active(query)
+            const result = await iUserService?.active(query)
             const apiResponse = new APIResponse(true, result, null)
             res.json(apiResponse)
         } catch (error: any) {
@@ -45,7 +44,7 @@ export class UserController extends Controller {
     login = async (req: Request, res: Response) => {
         const body = req.body
         try {
-            const token = await iUserService.login(body)
+            const token = await iUserService?.login(body)
             // console.log(token)
             if (token) {
                 saveCookie(token, res)

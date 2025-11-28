@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { Service } from "../services/Service";
 import { APIResponse } from "../ult/DTO"
+interface RequestExtends extends Request {
+    id?: string
+}
 export class Controller {
     service: Service
 
@@ -8,9 +11,23 @@ export class Controller {
         this.service = service
     }
 
-    findAll = async (req: Request, res: Response) => {
+    findAll = async (req: RequestExtends, res: Response) => {
         const query = req.query
         try {
+            // If slug is provided in query, use findBySlug instead
+            const newquery = query
+            newquery.hostId = req.id ? req.id : undefined
+            if (query.slug) {
+                const result = await this.service.findBySlug(String(query.slug))
+                if (!result?.slug) {
+                    throw Error("no data")
+                }
+                const { password, ...resultWithOutPassword } = result
+                const apiResponse = new APIResponse(true, "success", resultWithOutPassword)
+                res.json(apiResponse)
+                return
+            }
+
             const result = await this.service.findAll(query)
             const resultWithoutPassword = result.map((re: any) => {
                 const { password, ...resultWithoutPassword } = re
@@ -58,9 +75,10 @@ export class Controller {
             res.json(apiResponse)
         }
     }
-    create = async (req: Request, res: Response) => {
+    create = async (req: RequestExtends, res: Response) => {
+        const body = req.body
+        body.hostId = req.id
         try {
-            const body = req.body
             await this.service.create(body)
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
@@ -69,14 +87,12 @@ export class Controller {
             res.json(apiResponse)
         }
     }
-    update = async (req: Request, res: Response) => {
+    update = async (req: RequestExtends, res: Response) => {
         try {
             const body = req.body
+            const userId = req.id
             const id = req.params.id
-            if (!id) {
-                throw Error("no id")
-            }
-            await this.service.update(id, body)
+            await this.service.update(id, userId, body)
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
         } catch (error: any) {
@@ -84,13 +100,11 @@ export class Controller {
             res.json(apiResponse)
         }
     }
-    delete = async (req: Request, res: Response) => {
+    delete = async (req: RequestExtends, res: Response) => {
         try {
             const id = req.params.id
-            if (!id) {
-                throw Error("no id")
-            }
-            await this.service.delete(id)
+            const userId = req.id
+            await this.service.delete(id, userId)
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
         } catch (error: any) {
