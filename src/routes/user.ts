@@ -8,6 +8,8 @@ const iBlogController = new IBlogController()
 UserRouters.get("/", iUserController.findOne)
 // UserRouters.get("/:id", iUserController.findOne)
 UserRouters.post("/logout", iUserController.logout)
+
+UserRouters.get("/pic", iPicController.findAll)
 UserRouters.post("/pic", iPicController.create)
 UserRouters.delete("/pic/:id", iPicController.delete)
 

@@ -34,10 +34,10 @@ Content-Type: image/image/jpeg
 < ./images.png
 --WebAppBoundary--
 ####
-GET http://localhost:4000/api/blog
+GET http://localhost:4000/api/pic
 ###
-DELETE  http://localhost:4000/api/user/pic/7
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYzNjA2MjEwLCJleHAiOjE3NjM2OTI2MTB9.X8Dh0eE4uMHNXf_Y5Cl1T4msQ7JbIyksILCaqhvh4tc;
+DELETE  http://localhost:4000/api/user/pic/14
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0Mzk1MTE5LCJleHAiOjE3NjQ0ODE1MTl9._CtXyhE_KIiReT41AfJZnzJW9PNYgiLQuDs7blSrs34;
 ###
 POST http://localhost:4000/api/user/blog
 Content-Type: application/json

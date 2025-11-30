@@ -7,6 +7,7 @@ export const prompt = (type: string, body: { title: string, content: string, lin
             Nếu không có ${imgs} thì không dùng <figure><img></img></figure>.
             Toàn bộ nội dung phải nằm trong <div class="blog-post"> ... </div>.
             Đừng viết mã markdown, chỉ xuất HTML.
+            Không cần lấy tiêu đề và tên tác giả.
             ---
             Tiêu đề: ${body.title}
             Nội dung: dựa vào đoạn mã html mình cung cấp bên dưới"}
@@ -14,7 +15,6 @@ export const prompt = (type: string, body: { title: string, content: string, lin
             Định dạng yêu cầu:
 
             <div>
-                <h1>...</h1>
                 <p>...</p>
                 <figure>
                 <img src="..." alt="..." />

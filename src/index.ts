@@ -44,31 +44,31 @@ const run = async (item: any) => {
     console.log(images)
     console.log(body.link)
 
-    // const coverString = images ? images[0] : ""
-    // if (!coverString) {
-    //     console.log("no coverstring")
-    //     return
-    // }
-    // console.log("upload cover ...")
-    // console.log("link cover : " + coverString)
+    const coverString = images ? images[0] : ""
+    if (!coverString) {
+        console.log("no coverstring")
+        return
+    }
+    console.log("upload cover ...")
+    console.log("link cover : " + coverString)
 
-    // console.log("creating file ...")
-    // const file = await urlToFile(coverString)
-    // if (!file) {
-    //     console.log("no file")
-    //     return
-    // }
-    // console.log("file : ")
-    // console.log(file)
-    // const formData = new FormData();
-    // formData.append("file", file)
-    // const resultImage = await axios.post(process.env.NODE_APP_URL + "api/pic", formData, {
-    //     headers: {
-    //         cookie: `token=${process.env.ADMIN_TOKEN || ""}`
-    //     }
-    // });
-    // const coverId = resultImage.data.msg
-    // console.log("upload cover finish")
+    console.log("creating file ...")
+    const file = await urlToFile(coverString)
+    if (!file) {
+        console.log("no file")
+        return
+    }
+    console.log("file : ")
+    console.log(file)
+    const formData = new FormData();
+    formData.append("file", file)
+    const resultImage = await axios.post(process.env.NODE_APP_URL + "api/user/pic", formData, {
+        headers: {
+            cookie: `token=${process.env.ADMIN_TOKEN || ""}`
+        }
+    });
+    const cover = resultImage.data.data.name
+    console.log("upload cover finish")
 
     console.log("creating a post ...")
     const keyword = await callAIToMakeKeyword(body)
@@ -79,8 +79,8 @@ const run = async (item: any) => {
         slug: body.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "").toLowerCase(),
         content: text || "",
         description: description,
-        keyword: keyword
-
+        keyword: keyword,
+        cover: cover
     }
     try {
         const result = await axios.post(process.env.NODE_APP_URL + "api/user/blog", resultBody, {

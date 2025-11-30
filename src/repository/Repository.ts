@@ -10,16 +10,29 @@ export class Repository {
     async findAll<T>(where: Partial<T>) {
         const result = await this.model.findMany({
             where: where,
+            include: {
+                host: true
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
         })
         return result
     }
 
     async findOne(id: number) {
-        const result = await this.model.findFirst({ where: { id } })
+        const result = await this.model.findFirst({
+            where: { id }
+        })
         return result
     }
     async findBySlug(slug: string) {
-        const result = await this.model.findFirst({ where: { slug } })
+        const result = await this.model.findFirst({
+            where: { slug },
+            include: {
+                host: true
+            },
+        })
         return result
     }
     async create<T>(body: Partial<T>) {
