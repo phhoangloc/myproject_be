@@ -33,8 +33,6 @@ export class MiddleWare {
             if (!user) {
                 throw new Error("id is not Existed")
             }
-            const currentPosition = user.position
-
             req.id = result.id
 
             switch (this.position) {

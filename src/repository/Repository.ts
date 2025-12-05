@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 
 export class Repository {
     model: any;
@@ -11,7 +10,11 @@ export class Repository {
         const result = await this.model.findMany({
             where: where,
             include: {
-                host: true
+                host: {
+                    select: {
+                        username: true
+                    }
+                }
             },
             orderBy: {
                 createdAt: 'desc',

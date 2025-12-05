@@ -1,10 +1,11 @@
 import { Router } from "express";
 export const UserRouters = Router()
-import { IBlogController, IUserController } from "../controller/IController";
-import { IPicController } from "../controller/IController";
-const iPicController = new IPicController()
-const iUserController = new IUserController()
-const iBlogController = new IBlogController()
+import { IController } from "../controller/IController";
+import { UserController } from "../controller/UserController";
+import { PicController } from "../controller/PicController";
+const iUserController = IController.getController("user") as UserController
+const iPicController = IController.getController("pic") as PicController
+
 UserRouters.get("/", iUserController.findOne)
 // UserRouters.get("/:id", iUserController.findOne)
 UserRouters.post("/logout", iUserController.logout)
@@ -13,7 +14,3 @@ UserRouters.get("/pic", iPicController.findAll)
 UserRouters.post("/pic", iPicController.create)
 UserRouters.delete("/pic/:id", iPicController.delete)
 
-UserRouters.get("/blog/", iBlogController.findAll)
-UserRouters.post("/blog/", iBlogController.create)
-UserRouters.put("/blog/:id", iBlogController.update)
-UserRouters.delete("/blog/:id", iBlogController.delete)

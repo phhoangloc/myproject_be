@@ -1,11 +1,13 @@
 import { Request, Response, Router } from "express";
 import { UserRouters } from "./user";
 import { AdminRouters } from "./admin";
-import { IPicController, IUserController, IBlogController } from "../controller/IController";
 import { MiddleWare } from "../middleware";
-const iUserController = new IUserController()
-const iPicController = new IPicController()
-const iBlogController = new IBlogController()
+import { IController } from "../controller/IController";
+import { UserController } from "../controller/UserController";
+import { PicController } from "../controller/PicController";
+const iUserController = IController.getController("user") as UserController
+const iPicController = IController.getController("pic") as PicController
+// const iBlogController = new IBlogController()
 const UserMiddleware = new MiddleWare("user")
 const AdminMiddleware = new MiddleWare("admin")
 export const APIRouter = Router()
@@ -36,12 +38,8 @@ const gets = [
         action: iPicController.findAll
     },
     {
-        path: "/blog",
-        action: iBlogController.findAll
-    },
-    {
-        path: "/blog/:slug",
-        action: iBlogController.findBySlug
+        path: "/active",
+        action: iUserController.active
     },
 ]
 const posts = [
@@ -54,6 +52,6 @@ const posts = [
         action: iUserController.create
     }
 ]
-uses.map(use => APIRouter.use(use.path, use.middleWare.checkPosition, use.action))
+uses.map(user => APIRouter.use(user.path, user.middleWare.checkPosition, user.action))
 gets.map(get => APIRouter.get(get.path, get.action))
 posts.map(post => APIRouter.post(post.path, post.action))

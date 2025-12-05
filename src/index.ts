@@ -17,7 +17,7 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie']
 }));
 
 app.use(bodyParser.json({ limit: '5mb' }));
@@ -117,5 +117,5 @@ const runAutomation = async () => {
     }
 }
 
-runAutomation()
+// runAutomation()
 

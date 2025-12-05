@@ -83,7 +83,7 @@ export class Controller {
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
         } catch (error: any) {
-            const apiResponse = new APIResponse(false, "false", error.message)
+            const apiResponse = new APIResponse(false, error.message, null)
             res.json(apiResponse)
         }
     }
@@ -96,7 +96,7 @@ export class Controller {
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
         } catch (error: any) {
-            const apiResponse = new APIResponse(false, "false", error.message)
+            const apiResponse = new APIResponse(false, error.message, null)
             res.json(apiResponse)
         }
     }
@@ -108,7 +108,7 @@ export class Controller {
             const apiResponse = new APIResponse(true, "success", "")
             res.json(apiResponse)
         } catch (error: any) {
-            const apiResponse = new APIResponse(false, "false", error.message)
+            const apiResponse = new APIResponse(false, error.message, null)
             res.json(apiResponse)
         }
     }

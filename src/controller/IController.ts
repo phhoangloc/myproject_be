@@ -1,6 +1,15 @@
 import { UserController } from "./UserController";
 import { PicController } from "./PicController";
-import { BlogController } from "./BlogCotroller";
-export class IUserController extends UserController { }
-export class IPicController extends PicController { }
-export class IBlogController extends BlogController { }
+
+export class IController {
+    static getController(type: string) {
+        switch (type) {
+            case "user":
+                return new UserController();
+            case "pic":
+                return new PicController()
+            default:
+                return null
+        }
+    }
+}

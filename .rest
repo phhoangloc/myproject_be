@@ -1,14 +1,5 @@
-Get http://localhost:4000/api/user/blog
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0MjkyNjY3fQ.sgN1vZecvWZUEYkwTQpJNLOHQcFQ2HCrny-Ga5x4DvQ
-###
-post http://localhost:4000/api/signup
-Content-Type: application/json
-
-{
-    "username":"hoangloc2",
-    "password":"031090Ph@",
-    "email":"ph.hoangloc1990@gmail.com"
-}
+Get http://localhost:4000/api/admin/user
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY0OTEzOTQ2LCJleHAiOjE3NjUwMDAzNDZ9.B7nhb2qVxotoXnMOcqqtVauiKii1dpOoYbG_B9NpmUI;
 ###
 
 post http://localhost:4000/api/login
@@ -36,8 +27,8 @@ Content-Type: image/image/jpeg
 ####
 GET http://localhost:4000/api/pic
 ###
-DELETE  http://localhost:4000/api/user/pic/14
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0Mzk1MTE5LCJleHAiOjE3NjQ0ODE1MTl9._CtXyhE_KIiReT41AfJZnzJW9PNYgiLQuDs7blSrs34;
+DELETE  http://localhost:4000/api/user/pic/10
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY0MzIxNTY0LCJleHAiOjE3NjQ0MDc5NjR9.BCpHhVa3VK2WoZ7oYEIswzadhi5xM5qxAxlMqLmroco;
 ###
 POST http://localhost:4000/api/user/blog
 Content-Type: application/json
